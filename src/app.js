@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 require('dotenv').config();
 const express = require('express');
@@ -5,6 +6,7 @@ const morgan = require('morgan');
 const cors = require('cors');
 const helmet = require('helmet');
 const { NODE_ENV } = require('./config');
+const productsRouter = require('./Products/products-router');
 
 const app = express();
 
