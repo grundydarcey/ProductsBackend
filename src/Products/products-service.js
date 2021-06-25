@@ -1,15 +1,11 @@
 const productsService = {
   getAllProducts(knex) {
-    return knex
-      .select('*')
-      .from('products');  
+    return knex.select('*').from('products');  
   },
   getById(knex, id) {
-    return knex
-      .from('products')
-      .select('*')
-      .where('id', id)
-      .first();
+    return knex.select('*').from('products').where('id', id).first();
+    //.from('products')
+    // .where('id', id)
   }
 };
 
