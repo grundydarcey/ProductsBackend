@@ -3,7 +3,7 @@ const express = require('express');
 const productsService = require('./products-service');
 //const prodcutsService = require('./products-service');
 const productsRouter = express.Router();
-//const jsonParser = express.json();
+const jsonParser = express.json();
 const xss = require('xss');
 
 const serializeProduct = product => ({
@@ -29,7 +29,6 @@ productsRouter
 productsRouter
   .route('/:id')
   .get((req, res, next) => {
-    //const knexInstance = req.app.get('db');
     productsService.getById(
       req.app.get('db'),
       req.params.id
@@ -41,8 +40,24 @@ productsRouter
           });
         }
         res.json(serializeProduct(product));
-        //res.product = product;
-        //next();
+      })
+      .catch(next);
+  });
+
+
+productsRouter
+  .patch((req, res, next) => {
+    productsService.increaseLikes(
+      req.app.get('db'),
+      req.params.id
+    )
+      .then(product => {
+        if (!product) {
+          return res.status(404).json({
+            error: { message: `Can't like product that doesn't exist.` }
+          });
+        }
+        res.json(serializeProduct(product));
       })
       .catch(next);
   });
